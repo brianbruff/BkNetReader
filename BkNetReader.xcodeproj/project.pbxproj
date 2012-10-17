@@ -92,16 +92,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A9B92036161F5105007D60ED = {
+		A9A0AFB7162EE117003D22F6 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
 				A9B92082161F5ADB007D60ED /* libz.dylib */,
 				A9B92080161F5ACF007D60ED /* libxml2.dylib */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		A9B92036161F5105007D60ED = {
+			isa = PBXGroup;
+			children = (
+				A9B9204D161F5105007D60ED /* BkNetReader */,
 				A9B92078161F59C5007D60ED /* GTMNSString+HTML */,
 				A9B9207B161F59C5007D60ED /* RaptureXML */,
 				A9B92076161F53EB007D60ED /* arss_header.png */,
 				A9372A03162B5C56003FDAF4 /* me.jpg */,
-				A9B9204D161F5105007D60ED /* BkNetReader */,
+				A9A0AFB7162EE117003D22F6 /* Libraries */,
 				A9B92044161F5105007D60ED /* Frameworks */,
 				A9B92042161F5105007D60ED /* Products */,
 			);
