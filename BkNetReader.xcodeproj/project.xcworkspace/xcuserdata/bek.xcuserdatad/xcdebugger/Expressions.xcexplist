@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "__block_global_0:BKMasterViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[BKMasterViewController numberOfSectionsInTableView:]:BKMasterViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "(int)[[self.fetchedResultsController sections] count]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[BKMasterViewController tableView:numberOfRowsInSection:]:BKMasterViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "(int)[sectionInfo numberOfObjects]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
