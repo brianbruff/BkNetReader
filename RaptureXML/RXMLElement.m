@@ -104,6 +104,9 @@
     if ((self = [super init])) {
         NSData *data = [NSData dataWithContentsOfURL:url];
         
+        if (!data)
+            @throw [[NSException alloc] initWithName:@"No data" reason:@"Failed to retrieve data from Url" userInfo:nil];
+        
         doc_ = xmlReadMemory([data bytes], [data length], "", nil, XML_PARSE_RECOVER);
         
         if ([self isValid]) {

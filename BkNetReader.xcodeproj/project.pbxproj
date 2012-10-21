@@ -30,6 +30,7 @@
 		A9B9207F161F59C5007D60ED /* RXMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B9207D161F59C5007D60ED /* RXMLElement.m */; };
 		A9B92081161F5ACF007D60ED /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B92080161F5ACF007D60ED /* libxml2.dylib */; };
 		A9B92083161F5ADB007D60ED /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B92082161F5ADB007D60ED /* libz.dylib */; };
+		A9C759C0163486A500C4F4FB /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C759BF163486A500C4F4FB /* Post.m */; };
 		A9D68BCA16288008004EFF28 /* BKTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = A9D68BC916288008004EFF28 /* BKTableHeaderView.m */; };
 		A9D68C0C16288651004EFF28 /* BKRSSLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = A9D68C0B16288651004EFF28 /* BKRSSLoader.m */; };
 		A9D68C0F16288662004EFF28 /* BKRSSItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A9D68C0E16288662004EFF28 /* BKRSSItem.m */; };
@@ -67,6 +68,8 @@
 		A9B9207D161F59C5007D60ED /* RXMLElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXMLElement.m; sourceTree = "<group>"; };
 		A9B92080161F5ACF007D60ED /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		A9B92082161F5ADB007D60ED /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		A9C759BE163486A500C4F4FB /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
+		A9C759BF163486A500C4F4FB /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
 		A9D68BC816288008004EFF28 /* BKTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKTableHeaderView.h; sourceTree = "<group>"; };
 		A9D68BC916288008004EFF28 /* BKTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKTableHeaderView.m; sourceTree = "<group>"; };
 		A9D68C0A16288651004EFF28 /* BKRSSLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BKRSSLoader.h; path = ../BKRSSLoader.h; sourceTree = "<group>"; };
@@ -137,20 +140,22 @@
 		A9B9204D161F5105007D60ED /* BkNetReader */ = {
 			isa = PBXGroup;
 			children = (
-				A9D68C0A16288651004EFF28 /* BKRSSLoader.h */,
-				A9D68C0B16288651004EFF28 /* BKRSSLoader.m */,
-				A9D68C0D16288662004EFF28 /* BKRSSItem.h */,
-				A9D68C0E16288662004EFF28 /* BKRSSItem.m */,
 				A9B92056161F5105007D60ED /* BKAppDelegate.h */,
 				A9B92057161F5105007D60ED /* BKAppDelegate.m */,
-				A9B9205F161F5105007D60ED /* MainStoryboard.storyboard */,
-				A9B92065161F5105007D60ED /* BKMasterViewController.h */,
-				A9B92066161F5105007D60ED /* BKMasterViewController.m */,
-				A9D68BC816288008004EFF28 /* BKTableHeaderView.h */,
-				A9D68BC916288008004EFF28 /* BKTableHeaderView.m */,
 				A9B92068161F5105007D60ED /* BKDetailViewController.h */,
 				A9B92069161F5105007D60ED /* BKDetailViewController.m */,
+				A9B92065161F5105007D60ED /* BKMasterViewController.h */,
+				A9B92066161F5105007D60ED /* BKMasterViewController.m */,
 				A9B92062161F5105007D60ED /* BkNetReader.xcdatamodeld */,
+				A9D68C0D16288662004EFF28 /* BKRSSItem.h */,
+				A9D68C0E16288662004EFF28 /* BKRSSItem.m */,
+				A9D68C0A16288651004EFF28 /* BKRSSLoader.h */,
+				A9D68C0B16288651004EFF28 /* BKRSSLoader.m */,
+				A9D68BC816288008004EFF28 /* BKTableHeaderView.h */,
+				A9D68BC916288008004EFF28 /* BKTableHeaderView.m */,
+				A9B9205F161F5105007D60ED /* MainStoryboard.storyboard */,
+				A9C759BE163486A500C4F4FB /* Post.h */,
+				A9C759BF163486A500C4F4FB /* Post.m */,
 				A9B9204E161F5105007D60ED /* Supporting Files */,
 			);
 			path = BkNetReader;
@@ -273,6 +278,7 @@
 				A9D68BCA16288008004EFF28 /* BKTableHeaderView.m in Sources */,
 				A9D68C0C16288651004EFF28 /* BKRSSLoader.m in Sources */,
 				A9D68C0F16288662004EFF28 /* BKRSSItem.m in Sources */,
+				A9C759C0163486A500C4F4FB /* Post.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

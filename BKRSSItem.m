@@ -11,4 +11,13 @@
 @implementation BKRSSItem
 
 
+ -(void)initWithPost:(Post*) post
+ {
+     self.url = post.url;
+     self.title = post.title;
+     self.timestamp = post.timestamp;
+     self.desc = post.desc;
+ }
+
+
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "BKDetailViewController.h"
-#import "BKRSSItem.h"
+#import "Post.h"
 
 @interface BKDetailViewController ()
 {
@@ -29,10 +29,11 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    BKRSSItem* item = (BKRSSItem*)self.detailItem;
+    Post* item = (Post*)self.detailItem;
     self.title = item.title;
     webView.delegate = self;
-    NSURLRequest* articleRequest = [NSURLRequest requestWithURL: item.link];
+    NSURL *link = [[NSURL alloc] initWithString:item.url];
+    NSURLRequest* articleRequest = [NSURLRequest requestWithURL: link];
     [webView loadRequest: articleRequest];
 }
 

@@ -11,12 +11,13 @@
 #import "BKTableHeaderView.h"
 #import "BKRSSLoader.h"
 #import "BKRSSItem.h"
+#import "Post.h"
 
 
 
 @interface BKMasterViewController ()
 {
-    NSArray *_objects;
+    //NSArray *_objects;
     NSURL* feedURL;
     UIRefreshControl* refreshControl;
 }
@@ -46,7 +47,7 @@
     
     //configuration
     self.title = @"BrianKeating.net";
-   feedURL = [NSURL URLWithString:@"http://www.briankeating.net/syndication.axd"];
+    feedURL = [NSURL URLWithString:@"http://www.briankeating.net/syndication.axd"];
     
     
     //add refresh control to the table view
@@ -88,9 +89,8 @@
 {
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        //NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        BKRSSItem* item = [_objects objectAtIndex:indexPath.row];
-        [[segue destinationViewController] setDetailItem:item];
+        Post *post = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        [[segue destinationViewController] setDetailItem:post];
     }
 }
 
@@ -104,14 +104,14 @@
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Posts" inManagedObjectContext	:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Post" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
     
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
@@ -124,14 +124,14 @@
     
 	NSError *error = nil;
 	if (![self.fetchedResultsController performFetch:&error]) {
-	     // Replace this implementation with code to handle the error appropriately.
-	     // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
 	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 	    abort();
 	}
     
     return _fetchedResultsController;
-}    
+}
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
@@ -186,23 +186,20 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    //return [[self.fetchedResultsController sections] count];
-    return 1;
+    return [[self.fetchedResultsController sections] count];
+    //return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    //id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-    //return [sectionInfo numberOfObjects];
-    return [_objects count];
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
+    return [sectionInfo numberOfObjects];
+    //return [_objects count];
 }
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-   // NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    NSObject* object = [_objects objectAtIndex:indexPath.row];
-    BKRSSItem *item = (BKRSSItem*)object;
-    //cell.textLabel.text = [[item valueForKey:@"name"] description];
-    cell.textLabel.text = item.title;
+    Post *post = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    cell.textLabel.text = post.title;
 }
 
 
@@ -217,18 +214,23 @@
                     //completed fetching the RSS
                     dispatch_async(dispatch_get_main_queue(), ^{
                         //UI code on the main queue
-                        [(BKTableHeaderView*)self.tableView.tableHeaderView setText:title];
                         
-                        _objects = results;
+                        if (title)
+                        {
                         
-                        //for (NSObject* obj in _objects){
-                         //   [self insertNewObject:obj];
-                        //}
+                            [(BKTableHeaderView*)self.tableView.tableHeaderView setText:title];
                         
-                        [self.tableView reloadData];
+                            for (BKRSSItem* item in results){
+                                [self insertNewObject:item];
+                            }
                         
-                        // Stop refresh control
-                        //[self.refreshControl endRefreshing];
+                            [self.tableView reloadData];
+                        
+                            // Stop refresh control
+                            //[self.refreshControl endRefreshing];
+                            
+                        }
+                        
                         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                     });
                 }];
@@ -237,17 +239,31 @@
 }
 
 
-- (void)insertNewObject:(NSObject*) object
+- (void)insertNewObject:(BKRSSItem*) item
 {
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *newPostObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
     
-    BKRSSItem* item = (BKRSSItem*)object;		
-    // Set the values
-    [newPostObject setValue:item.title forKey:@"title"];
-    [newPostObject setValue:item.description forKey:@"desc"];
-    [newPostObject setValue:[item.link absoluteString] forKey:@"url"];
+    
+    // check all the existing objects for title, if it exists then nothing to do
+    NSArray* fetchedData = [self.fetchedResultsController fetchedObjects];
+    for (Post* post in fetchedData)
+    {
+        if ([post.title isEqualToString:item.title])
+            return;
+    }
+    
+    // Didnt already exist, so add it
+    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
+    Post *newPost = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
+       
+    
+    // If appropriate, configure the new managed object.
+    // Normally you should use accessor methods, but usicoreng KVC here avoids the need to add a custom class to the template.
+    //[newManagedObject setValue: forKey:@"title"];
+    newPost.title = item.title;
+    newPost.desc = item.desc;
+    newPost.timestamp = item.timestamp;
+    newPost.url = item.url;
     
     // Save the context.
     NSError *error = nil;
@@ -257,6 +273,9 @@
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
+
 }
+
+
 
 @end
